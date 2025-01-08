@@ -14,8 +14,10 @@ map=(
 
 # Helper function to access the map
 get_map_value() {
-  local current_position=$1
-  echo "${map[$current_position]}"
+  local row=$1
+  local col=$2
+  local index=$((row * 11 + col))
+  echo "${map[$index]}"
 }
 get_next_val(){
   local current_position=$1
