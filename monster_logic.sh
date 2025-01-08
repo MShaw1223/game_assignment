@@ -1,6 +1,6 @@
 #! /bin/bash
 
-oppohealth=$((RANDOM % 40))
+oppohealth=$((RANDOM % 30))
 
 if [ $oppohealth -lt 10 ]; then
     echo "It's a Goblin!"
