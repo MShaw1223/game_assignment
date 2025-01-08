@@ -4,7 +4,7 @@ map=(
   0 1 0 0 0 1 0 0 0 1 0
   0 1 0 0 0 4 0 0 0 1 0
   0 1 1 0 0 1 0 0 0 1 0
-  0 0 1 3 1 0 1 1 1 1 0
+  0 0 1 3 1 1 1 1 1 1 0
   0 1 1 0 0 1 0 1 0 1 0
   0 1 0 0 0 1 1 2 1 1 0
   0 1 0 0 0 1 0 1 0 1 0
@@ -19,14 +19,9 @@ get_map_value() {
   local index=$((row * 11 + col))
   echo "${map[$index]}"
 }
-get_next_val(){
-  local current_position=$1
-  local val=$2
-  echo "${map[$((current_position + val))]}"
-}
 
-curr_row=6
-curr_col=6
+curr_row=5
+curr_col=5
 
 while true; do
   echo "Current Position: ($curr_row, $curr_col)"
