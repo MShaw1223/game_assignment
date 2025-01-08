@@ -23,10 +23,12 @@ get_map_value() {
 curr_row=5
 curr_col=5
 
+tiles=("wall" "path" "loot" "enemy")
+
 while true; do
   echo "Current Position: ($curr_row, $curr_col)"
   current_value=$(get_map_value "$curr_row" "$curr_col")
-  echo "You are standing on: $current_value"
+  echo "You are standing on: ${tiles[$current_value]}"
 
   read -p "I: inventory | M: move | C: Check score | Q: Quit " choice
   case $choice in
@@ -38,16 +40,38 @@ while true; do
       read -p "Enter A/W/S/D: " movement
       case $movement in
         a)
-          if ((curr_col > 0)); then
+          next_tile=$(get_map_value "$curr_row" "((curr_col-1))")
+          if ((curr_col > 0 && next_tile > 0)); then
             ((curr_col--))
           else
             echo "Can't move left!"; 
+          fi;;
+        w)
+          next_tile=$(get_map_value "((curr_row-1))" "$curr_col")
+          if ((curr_row > 0 && next_tile > 0));then
+            ((curr_row--))
+          else
+            echo "Can't move up!"
+          fi;;
+        s)
+          next_tile=$(get_map_value "((curr_row+1))" "$curr_col")
+          if ((curr_row > 0 && next_tile > 0)); then
+            ((curr_row++))
+          else
+            echo "Can't move down!"
+          fi;;
+        d)
+          next_tile=$(get_map_value "$curr_row" "$((curr_col+1))")
+          if ((curr_col > 0 && next_tile > 0)); then
+            ((curr_col++))
+          else
+            echo "Can't move right!"; 
           fi;;
         *)
           echo "incorrect";;
         esac;;
     q) 
-      echo "Quit"; 
+      echo "Quiting game..."; 
       break;;
     *) 
       echo "Incorrect input";;
