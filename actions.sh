@@ -1,9 +1,14 @@
 #! /bin/bash
-source ./inventory.sh
 
 # Global variables
 initial_player_health=30
 player_health=$initial_player_health
+
+potions=3
+
+game_weapons=( [0]="bow" [1]="sword" [2]="axe" )
+user_weapons=(1 2)
+current_weapon=${user_weapons[0]}
 
 # Health potion 
 use_health_potion(){
@@ -25,8 +30,20 @@ use_health_potion(){
     echo "Player health: $player_health"
 }
 
-player_health_check(){
-    if [ $player_health -le 0 ]; then
-        echo "You are dead!"
+change_weapon(){
+    if ((${#user_weapons[@]} == 1));then
+        echo "No other weapons in inventory."
+    else
+        echo "Available Weapons: "
+        for ((i=0; i < ${#user_weapons[@]};i++)); do
+            weapon_name=${game_weapons[${user_weapons[$i]}]}
+            if [ $weapon_name != ${game_weapons[$current_weapon]} ]; then
+                echo "$i: $weapon_name"
+            fi
+        done
+        read -p "Enter choice: " ch
+
+        current_weapon=${user_weapons[ch]}
+        echo "Weapon changed to ${game_weapons[$current_weapon]}."
     fi
 }

@@ -1,6 +1,4 @@
 #! /bin/bash
-source ./actions.sh
-source ./inventory.sh
 
 # Global variables
 oppo_type=""
@@ -17,7 +15,7 @@ monster_type(){
         oppo_type="VAMPIRE"
         echo "A wild $oppo_type appears!"
         echo "$oppo_type's health: $oppo_health"
-    elif [ $oppo_health -ge 20 ] && [ $oppo_health -lt 30 ]; then
+    elif [ $oppo_health -ge 20 ] && [ $oppo_health -le 30 ]; then
         oppo_type="WEREWOLF"
         echo "A wild $oppo_type appears!"
         echo "$oppo_type's health: $oppo_health"
@@ -27,19 +25,57 @@ monster_type(){
 # Player attacks and damage 
 player_attack(){
     player_dmg=0
-    attack=$((RANDOM % 31))
-    if [ $attack -le 10 ]; then
-        player_dmg=$((RANDOM % 8 + 3))
-        oppo_health=$((oppo_health - player_dmg))
-        echo "You SLASH the $oppo_type for $player_dmg damage!"
-    elif [ $attack -gt 10 ] && [ $attack -lt 20 ]; then
-        player_dmg=$((RANDOM % 13 + 3))
-        oppo_health=$((oppo_health - player_dmg))
-        echo "You CHOP the $oppo_type for $player_dmg damage!"
-    elif [ $attack -ge 20 ] && [ $attack -lt 30 ]; then
-        player_dmg=$((RANDOM % 18 + 3))
-        oppo_health=$((oppo_health - player_dmg))
-        echo "You STAB the $oppo_type for $player_dmg damage!"
+    # axe logic 
+    if (( current_weapon == 2 ))  ; then
+        echo -e "Attack:\n1. Hack (7-10 dmg) \n2. Chop (5-15 dmg) \n3. Cleave (2-20 dmg)"
+        read -r -p "Choice: " ch
+        if (( ch == 1 )); then
+            player_dmg=$((RANDOM % 4 + 7))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You HACK the $oppo_type for $player_dmg damage!"
+        elif (( ch == 2 )); then
+            player_dmg=$((RANDOM % 11 + 5))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You CHOP the $oppo_type for $player_dmg damage!"
+        elif (( ch == 3 )); then
+            player_dmg=$((RANDOM % 19 + 2))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You CLEAVE the $oppo_type for $player_dmg damage!"
+        fi
+    # bow logic 
+    elif (( current_weapon == 0 )) ; then
+        echo -e "Attack:\n1. Shot (7-10 dmg) \n2. Pierce (5-15 dmg) \n3. Rapid (2-20 dmg)"
+        read -r -p "Choice: " ch
+        if (( ch == 1 )); then
+            player_dmg=$((RANDOM % 4 + 7))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You SHOT the $oppo_type for $player_dmg damage!"
+        elif (( ch == 2 )); then
+            player_dmg=$((RANDOM % 11 + 5))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You PIERCE SHOT the $oppo_type for $player_dmg damage!"
+        elif (( ch == 3 )); then
+            player_dmg=$((RANDOM % 19 + 2))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You RAPID SHOT the $oppo_type for $player_dmg damage!"
+        fi
+    # sword logic 
+    elif (( current_weapon == 1 )) ; then
+        echo -e "Attack:\n1. Slice (7-10 dmg) \n2. Slash (5-15 dmg) \n3. Stab (2-20 dmg)"
+        read -r -p "Choice: " ch
+        if (( ch == 1 )); then
+            player_dmg=$((RANDOM % 4 + 7))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You SLICE the $oppo_type for $player_dmg damage!"
+        elif (( ch == 2 )); then
+            player_dmg=$((RANDOM % 11 + 5))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You SLASH the $oppo_type for $player_dmg damage!"
+        elif (( ch == 3 )); then
+            player_dmg=$((RANDOM % 19 + 2))
+            oppo_health=$((oppo_health - player_dmg))
+            echo "You STAB the $oppo_type for $player_dmg damage!"
+        fi
     fi
 }
 
@@ -66,7 +102,8 @@ fight_loop(){
     while [ $player_health -gt 0 ] && [ $oppo_health -gt 0 ]; do  
         echo -e "What do you want to do:\n1. Fight\n2. Flee\n3. Inventory"
         read -r -p "Choice: " ch
-        if (( ch == 1)); then
+        ch=$(echo "$ch" | tr '[:upper:]' '[:lower:]')
+        if (( ch == 1 || "$ch" == "fight" )); then
             player_attack  
             if [ $oppo_health -le 0 ]; then 
                 (( score+= 5 ))
@@ -86,12 +123,12 @@ fight_loop(){
             fi
         elif (( ch == 3 )); then
             inventory    
+            continue
         else
             echo "Invalid choice. Fight or Flee."
             continue
         fi
         monster_attack  
-        player_health_check
         if [ $player_health -le 0 ]; then 
             (( score-- ))
             echo "You have been defeated!"

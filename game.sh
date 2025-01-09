@@ -1,7 +1,6 @@
 #! /bin/bash
 source ./inventory.sh
 
-
 map=(
   0 0 0 0 0 0 0 0 0 0 0
   0 1 1 1 1 1 1 1 1 1 0
