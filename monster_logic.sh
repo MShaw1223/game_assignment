@@ -1,5 +1,6 @@
 #! /bin/bash
 source ./actions.sh
+source ./inventory.sh
 
 # Global variables
 oppo_type=""
@@ -84,18 +85,7 @@ fight_loop(){
                 break
             fi
         elif (( ch == 3 )); then
-            echo -e "What do you want to do:\n1. Use potion\n2. Change weapon \n3. Back"
-            read -r -p "Choice: " ch
-            if (( ch == 1 )); then
-                use_health_potion
-            elif (( ch == 2 )); then
-                echo "Weapon changed."
-            elif (( ch == 3 )); then 
-                continue
-            else
-                echo "Invalid choice. Please choose again."
-            fi
-            continue   
+            inventory    
         else
             echo "Invalid choice. Fight or Flee."
             continue
