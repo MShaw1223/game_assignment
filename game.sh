@@ -22,8 +22,8 @@ get_map_value() {
 moves=("None")
 
 score=0
-curr_row=6
-curr_col=7
+curr_row=5
+curr_col=5
 
 tiles=("wall" "path" "loot" "door" "enemy")
 
@@ -74,6 +74,10 @@ while true; do
   echo "Current Position: ($curr_row, $curr_col)"
   current_value=$(get_map_value "$curr_row" "$curr_col")
 
+  if ((current_value == 4));then 
+    source monster_logic.sh
+  fi
+
   if ((current_value == 2));then
     echo "You are standing on: ${tiles[$current_value]}"
     read -p "P to pickup loot, b to go back: " pickup
@@ -104,7 +108,7 @@ while true; do
         [aA])
           next_tile=$(get_map_value "$curr_row" "((curr_col-1))")
           if ((curr_col > 0 && next_tile > 0)); then
-            if ((next_tile == 1 || next_tile == 2));then
+            if ((next_tile == 1 || next_tile == 2|| next_tile == 4));then
               ((curr_col--))
               moves+=($movement)
             elif ((next_tile==3));then
@@ -125,7 +129,7 @@ while true; do
         [wW])
           next_tile=$(get_map_value "((curr_row-1))" "$curr_col")
           if ((curr_col > 0 && next_tile > 0)); then
-            if ((next_tile == 1 || next_tile == 2));then
+            if ((next_tile == 1 || next_tile == 2 || next_tile == 4));then
               ((curr_row--))
               moves+=($movement)
             elif ((next_tile==3));then
@@ -146,7 +150,7 @@ while true; do
         [sS])
           next_tile=$(get_map_value "((curr_row+1))" "$curr_col")
           if ((curr_col > 0 && next_tile > 0)); then
-            if ((next_tile == 1 || next_tile == 2));then
+            if ((next_tile == 1 || next_tile == 2 || next_tile == 4));then
               ((curr_row++))
               moves+=($movement)
             elif ((next_tile==3));then
@@ -167,7 +171,7 @@ while true; do
         [dD])
           next_tile=$(get_map_value "$curr_row" "$((curr_col+1))")
           if ((curr_col > 0 && next_tile > 0)); then
-            if ((next_tile == 1 || next_tile == 2));then
+            if ((next_tile == 1 || next_tile == 2|| next_tile == 4));then
               ((curr_col++))
               moves+=($movement)
             elif ((next_tile==3));then
