@@ -4,11 +4,11 @@ source ./monster_logic.sh
 
 map=(
   0 0 0 0 0 0 0 0 0 0 0
-  0 1 1 1 1 4 1 1 1 1 0
+  0 1 1 1 1 1 1 1 1 1 0
   0 1 0 0 0 4 0 0 0 1 0
-  0 1 0 0 0 4 0 0 0 1 0
+  0 1 0 0 0 1 0 0 0 1 0
   0 1 1 0 0 1 0 0 0 1 0
-  0 0 1 3 1 1 1 1 1 1 0
+  0 0 1 3 1 1 1 4 1 1 0
   0 1 1 0 0 1 0 1 0 1 0
   0 1 0 0 0 1 1 2 1 1 0
   0 1 0 0 0 1 0 1 0 1 0
@@ -85,14 +85,16 @@ while true; do
 
   if ((current_value == 4));then 
     fight_loop
-    repeatLastMove $last_move
+    if ((score >= 0)); then
+      repeatLastMove $last_move
+    fi
     if (( score < 0 )); then
-      score=0
       echo -e "RISE AGAIN TO FIGHT THE DARKNESS?\n1. Yes\n2. No"
       read -r -p "Choice: " ch
       if (( ch == 1 )); then 
-        $(( curr_row=5 ))
-        $(( curr_col=5 ))
+        score=0
+        (( curr_row=5 ))
+        (( curr_col=5 ))
         continue
       elif (( ch == 2 )); then
         echo "Coward."
