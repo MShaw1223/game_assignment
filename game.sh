@@ -23,9 +23,10 @@ get_map_value() {
   echo "${map[$index]}"
 }
 
-# Global viariables
-score=0
 moves=("None")
+
+score=0
+# spawn=((5*11+5))
 curr_row=5
 curr_col=5
 
@@ -88,8 +89,20 @@ while true; do
     read -p "P to pickup loot, b to go back: " pickup
       case $pickup in
         [pP])
-          echo "Loot picked up, +1 score!"
-          ((score++))
+          loot_drop=RANDOM % 3 # 0-weapon 1-potion 2-score
+          case $loot_drop in
+            0)
+              weapon_drop=RANDOM % 3
+              user_weapons+=($weapon_drop);;
+            1)
+             echo "Potion found +1"
+              (( potions++ ));;
+            2)
+               echo "Loot picked up, +1 score!"
+              ((score++));;
+            *)
+              echo "Loot drop error";;
+          esac
           repeatLastMove $last_move;;
         [bB])
           revertLastMove $last_move;;
