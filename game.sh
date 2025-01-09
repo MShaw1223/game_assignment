@@ -76,6 +76,7 @@ while true; do
 
   if ((current_value == 4));then 
     source monster_logic.sh
+    repeatLastMove $last_move
   fi
 
   if ((current_value == 2));then

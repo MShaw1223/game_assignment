@@ -1,8 +1,7 @@
 #! /bin/bash
+source ./actions.sh
 
 # Global variables
-initial_player_health=30
-player_health=$initial_player_health
 oppo_type=""
 oppo_health=0
 
@@ -60,27 +59,6 @@ monster_attack(){
     fi
 }
 
-player_health_check(){
-    if [ $player_health -le 0 ]; then
-        echo "You are dead!"
-    fi
-}
-
-# Health potion 
-use_health_potion(){
-    health_potion=$((RANDOM % 9 + 2))
-    if (( player_health < initial_player_health )); then
-        player_health=$(( player_health + health_potion ))
-        echo "You restored $health_potion health!"
-    else
-        echo "You are already at maximum health!"
-    fi
-    if (( player_health > initial_player_health)); then 
-        player_health=$initial_player_health
-    fi
-    echo "Player health: $player_health"
-}
-
 # Main fight logic
 fight_loop(){
     monster_type  
@@ -90,6 +68,7 @@ fight_loop(){
         if (( ch == 1)); then
             player_attack  
             if [ $oppo_health -le 0 ]; then 
+                (( score+= 5 ))
                 echo "The $oppo_type is dead!"
                 break
             fi
@@ -114,6 +93,7 @@ fight_loop(){
         monster_attack  
         player_health_check
         if [ $player_health -le 0 ]; then 
+            (( score-- ))
             echo "You have been defeated!"
             break
         fi
