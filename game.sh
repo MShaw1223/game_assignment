@@ -77,8 +77,6 @@ while true; do
   last_move_index=$((len_moves-1))
   last_move=${moves[$last_move_index]}
 
-
-
   echo "last move: $last_move"
   echo "Current Position: ($curr_row, $curr_col)"
   current_value=$(get_map_value "$curr_row" "$curr_col")
@@ -95,6 +93,7 @@ while true; do
         score=0
         (( curr_row=5 ))
         (( curr_col=5 ))
+        (( player_health=initial_player_health ))
         continue
       elif (( ch == 2 )); then
         echo "Coward."
