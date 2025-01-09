@@ -1,3 +1,7 @@
+#! /bin/bash
+source ./inventory.sh
+
+
 map=(
   0 0 0 0 0 0 0 0 0 0 0
   0 1 1 1 1 1 1 1 1 1 0
@@ -19,9 +23,9 @@ get_map_value() {
   echo "${map[$index]}"
 }
 
-moves=("None")
-
+# Global viariables
 score=0
+moves=("None")
 curr_row=5
 curr_col=5
 
@@ -100,7 +104,8 @@ while true; do
   read -p "> " choice
   case $choice in
     [iI]) 
-      echo "Inventory";;
+      echo "Inventory"
+      inventory;;
     [cC]) 
       echo "Current score: $score";;
     [mM]) 

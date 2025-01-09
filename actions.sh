@@ -1,9 +1,9 @@
 #! /bin/bash
+source ./inventory.sh
 
 # Global variables
 initial_player_health=30
 player_health=$initial_player_health
-potions=3
 
 # Health potion 
 use_health_potion(){

@@ -63,7 +63,7 @@ monster_attack(){
 fight_loop(){
     monster_type  
     while [ $player_health -gt 0 ] && [ $oppo_health -gt 0 ]; do  
-        echo -e "What do you want to do:\n1. Fight\n2. Flee\n3. Use a Health Potion"
+        echo -e "What do you want to do:\n1. Fight\n2. Flee\n3. Inventory"
         read -r -p "Choice: " ch
         if (( ch == 1)); then
             player_attack  
@@ -84,7 +84,17 @@ fight_loop(){
                 break
             fi
         elif (( ch == 3 )); then
-            use_health_potion
+            echo -e "What do you want to do:\n1. Use potion\n2. Change weapon \n3. Back"
+            read -r -p "Choice: " ch
+            if (( ch == 1 )); then
+                use_health_potion
+            elif (( ch == 2 )); then
+                echo "Weapon changed."
+            elif (( ch == 3 )); then 
+                continue
+            else
+                echo "Invalid choice. Please choose again."
+            fi
             continue   
         else
             echo "Invalid choice. Fight or Flee."
