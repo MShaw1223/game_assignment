@@ -91,8 +91,8 @@ while true; do
       echo -e "RISE AGAIN TO FIGHT THE DARKNESS?\n1. Yes\n2. No"
       read -r -p "Choice: " ch
       if (( ch == 1 )); then 
-        (( curr_row=5 ))
-        (( curr_col=5 ))
+        $(( curr_row=5 ))
+        $(( curr_col=5 ))
         continue
       elif (( ch == 2 )); then
         echo "Coward."
