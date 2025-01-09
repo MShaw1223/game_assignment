@@ -1,10 +1,11 @@
 #! /bin/bash
 source ./inventory.sh
+source ./monster_logic.sh
 
 map=(
   0 0 0 0 0 0 0 0 0 0 0
-  0 1 1 1 1 1 1 1 1 1 0
-  0 1 0 0 0 1 0 0 0 1 0
+  0 1 1 1 1 4 1 1 1 1 0
+  0 1 0 0 0 4 0 0 0 1 0
   0 1 0 0 0 4 0 0 0 1 0
   0 1 1 0 0 1 0 0 0 1 0
   0 0 1 3 1 1 1 1 1 1 0
@@ -26,6 +27,7 @@ moves=("None")
 
 score=0
 # spawn=((5*11+5))
+
 curr_row=5
 curr_col=5
 
@@ -69,18 +71,36 @@ repeatLastMove(){
   esac
 }
 
+
 while true; do
   len_moves=${#moves[@]}
   last_move_index=$((len_moves-1))
   last_move=${moves[$last_move_index]}
+
+
 
   echo "last move: $last_move"
   echo "Current Position: ($curr_row, $curr_col)"
   current_value=$(get_map_value "$curr_row" "$curr_col")
 
   if ((current_value == 4));then 
-    source monster_logic.sh
+    fight_loop
     repeatLastMove $last_move
+    if (( score < 0 )); then
+      score=0
+      echo -e "RISE AGAIN TO FIGHT THE DARKNESS?\n1. Yes\n2. No"
+      read -r -p "Choice: " ch
+      if (( ch == 1 )); then 
+        (( curr_row=5 ))
+        (( curr_col=5 ))
+        continue
+      elif (( ch == 2 )); then
+        echo "Coward."
+        break
+      else
+        echo "Invalid choice. Please choose again"
+      fi
+    fi
   fi
 
   if ((current_value == 2));then
@@ -218,5 +238,3 @@ while true; do
       echo "Incorrect input";;
   esac
 done
-
-

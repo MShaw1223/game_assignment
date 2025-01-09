@@ -27,35 +27,35 @@ player_attack(){
     player_dmg=0
     # axe logic 
     if (( current_weapon == 2 ))  ; then
-        echo -e "Attack:\n1. Hack (7-10 dmg) \n2. Chop (5-15 dmg) \n3. Cleave (2-20 dmg)"
+        echo -e "Attack:\n1. Hack (5-12 dmg) \n2. Chop (3-17 dmg) \n3. Cleave (1-23 dmg)"
         read -r -p "Choice: " ch
         if (( ch == 1 )); then
-            player_dmg=$((RANDOM % 4 + 7))
+            player_dmg=$((RANDOM % 8 + 5))
             oppo_health=$((oppo_health - player_dmg))
             echo "You HACK the $oppo_type for $player_dmg damage!"
         elif (( ch == 2 )); then
-            player_dmg=$((RANDOM % 11 + 5))
+            player_dmg=$((RANDOM % 15 + 3))
             oppo_health=$((oppo_health - player_dmg))
             echo "You CHOP the $oppo_type for $player_dmg damage!"
         elif (( ch == 3 )); then
-            player_dmg=$((RANDOM % 19 + 2))
+            player_dmg=$((RANDOM % 23 + 1))
             oppo_health=$((oppo_health - player_dmg))
             echo "You CLEAVE the $oppo_type for $player_dmg damage!"
         fi
     # bow logic 
     elif (( current_weapon == 0 )) ; then
-        echo -e "Attack:\n1. Shot (7-10 dmg) \n2. Pierce (5-15 dmg) \n3. Rapid (2-20 dmg)"
+        echo -e "Attack:\n1. Shot (8-9 dmg) \n2. Pierce (7-13 dmg) \n3. Rapid (6-16 dmg)"
         read -r -p "Choice: " ch
         if (( ch == 1 )); then
-            player_dmg=$((RANDOM % 4 + 7))
+            player_dmg=$((RANDOM % 2 + 8))
             oppo_health=$((oppo_health - player_dmg))
             echo "You SHOT the $oppo_type for $player_dmg damage!"
         elif (( ch == 2 )); then
-            player_dmg=$((RANDOM % 11 + 5))
+            player_dmg=$((RANDOM % 7 + 7))
             oppo_health=$((oppo_health - player_dmg))
             echo "You PIERCE SHOT the $oppo_type for $player_dmg damage!"
         elif (( ch == 3 )); then
-            player_dmg=$((RANDOM % 19 + 2))
+            player_dmg=$((RANDOM % 11 + 6))
             oppo_health=$((oppo_health - player_dmg))
             echo "You RAPID SHOT the $oppo_type for $player_dmg damage!"
         fi
@@ -130,7 +130,7 @@ fight_loop(){
         fi
         monster_attack  
         if [ $player_health -le 0 ]; then 
-            (( score-- ))
+            (( score=-1 ))
             echo "You have been defeated!"
             break
         fi
@@ -138,5 +138,3 @@ fight_loop(){
         echo "Player health: $player_health"
     done
 }
-
-fight_loop
