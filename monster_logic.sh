@@ -10,14 +10,57 @@ monster_type(){
     if [ $oppo_health -le 10 ]; then
         oppo_type="GHOUL"
         echo "A wild $oppo_type appears!"
+        cat << 'EOF'
+         ________
+      .-"        "-.
+     /              \
+    |,   .-.  .-.   ,|
+    | )(_o_/  \_o_)( |
+    |/      /\      \|
+    (_      ^^      _)
+     \___|IIIIII|___/
+      |  \IIIIII/  |
+      \            /
+       `----------`
+EOF
         echo "$oppo_type's health: $oppo_health"
     elif [ $oppo_health -gt 10 ] && [ $oppo_health -lt 20 ]; then
         oppo_type="VAMPIRE"
         echo "A wild $oppo_type appears!"
+        cat << 'EOF'
+                   .d:....:h.
+                .:!!!!!!!!!!!!:.
+           .::!!!!!!!!!!!!!!!!!!!!::.
+    ..::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::..
+..```. . eeee .... ... '~' ... .... eeee . .'''..
+ `!h:. $ $$$$ $$$$ $$$$b d$$$$ $$$$ $$$$ $ .:h!'
+  `!!!!. `$$$ '$$' '$$$' `$$$` '$$' $$$'.!!!!!'
+    `!!!!.`$$ .   .  ......   .   . $$'.!!!!'
+     `!!!! $$ !!!!!!!!!!!!!!!!!!!!! $$ !!!!'
+       `!!h ` !!!!!!!!!!!!!!!!!!!!! ' d!!'
+         `!h !!!!!!!!!!!!!!!!!!!!!!! d!'
+          ``!!!!!!!!!!!!!!!!!!!!!!!!''
+             ``!!!!!!!!!!!!!!!!!!''
+                 ```!!!!!!!!'''
+EOF
         echo "$oppo_type's health: $oppo_health"
     elif [ $oppo_health -ge 20 ] && [ $oppo_health -le 30 ]; then
         oppo_type="WEREWOLF"
         echo "A wild $oppo_type appears!"
+        cat << 'EOF'
+                     /\
+                    ( ;`~v/~~~ ;._
+                 ,/'"/^) ' < o\  '".~'\\\--,
+               ,/",/W  u '`. ~  >,._..,   )'
+              ,/'  w  ,U^v  ;//^)/')/^\;~)'
+           ,/"'/   W` ^v  W |;         )/'
+         ;''  |  v' v`" W }  \\
+        "    .'\    v  `v/^W,) '\)\.)\/)
+                 `\   ,/,)'   ''')/^"-;'
+                      \
+                       '". _
+                            \\
+EOF
         echo "$oppo_type's health: $oppo_health"
     fi
 }
