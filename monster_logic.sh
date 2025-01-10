@@ -26,6 +26,7 @@ monster_type(){
 player_attack(){
     player_dmg=0
     # axe logic 
+    # shellcheck disable=SC2154
     if (( current_weapon == 2 ))  ; then
         echo -e "Attack:\n1. Hack (5-12 dmg) \n2. Chop (3-17 dmg) \n3. Cleave (1-23 dmg)"
         read -r -p "Choice: " ch
@@ -99,6 +100,7 @@ monster_attack(){
 # Main fight logic
 fight_loop(){
     monster_type  
+    # shellcheck disable=SC2086
     while [ $player_health -gt 0 ] && [ $oppo_health -gt 0 ]; do  
         echo -e "What do you want to do:\n1. Fight\n2. Flee\n3. Inventory"
         read -r -p "Choice: " ch

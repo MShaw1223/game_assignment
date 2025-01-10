@@ -41,7 +41,7 @@ change_weapon(){
                 echo "$i: $weapon_name"
             fi
         done
-        read -p "Enter choice: " ch
+        read -r -p "Enter choice: " ch
 
         current_weapon=${user_weapons[ch]}
         echo "Weapon changed to ${game_weapons[$current_weapon]}."

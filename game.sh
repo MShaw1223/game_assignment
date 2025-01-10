@@ -71,13 +71,16 @@ repeatLastMove(){
   esac
 }
 
+echo "DUNGEON CRAWLER"
+echo "Welcome, adventurer! Will you be the brave soul that manages to escape with all the loot? Let's find out!" 
+echo "========================================================================================================="
 
 while true; do
   len_moves=${#moves[@]}
   last_move_index=$((len_moves-1))
   last_move=${moves[$last_move_index]}
 
-  echo "last move: $last_move"
+  echo "Last Move: $last_move"
   echo "Current Position: ($curr_row, $curr_col)"
   current_value=$(get_map_value "$curr_row" "$curr_col")
 
@@ -133,7 +136,7 @@ while true; do
       echo "You are standing on: ${tiles[$current_value]}"
   fi
 
-  echo "I: inventory | M: move | C: Check score | Q: Quit "
+  echo "I: Inventory | M: Move | C: Check Score | Q: Quit "
   read -p "> " choice
   case $choice in
     [iI]) 
@@ -232,7 +235,10 @@ while true; do
           echo "incorrect";;
         esac;;
     [qQ]) 
-      echo "Final score: $score"
+      if (( score > 5 )); then
+        echo "CONGRATULATIONS! You have looted the dungeon dry. This place never saw it coming."
+      fi
+      echo "Final Score: $score."
       echo "Quiting game..."
       break;;
     *) 
